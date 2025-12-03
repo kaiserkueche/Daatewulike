@@ -1,0 +1,84 @@
+1. Overpass API Query for All Municipalities with Boundaries and Node Labels:
+
+We will use an Overpass API query that fetches municipality boundaries (relations) and nodes (points) with the French names.
+
+Overpass API Query:
+[out:json][timeout:120];
+area["name"="Alsace"]["boundary"="administrative"]->.a;
+
+(
+  relation["admin_level"="8"]["boundary"="administrative"](area.a);  // Fetch municipalities as relations (boundaries)
+  node["admin_level"="8"]["name:fr"](area.a);  // Fetch nodes with French name for municipalities
+);
+
+out tags geom;
+
+What this query does:
+
+area["name"="Alsace"]->.a; – Fetches the area of Alsace.
+
+relation["admin_level"="8"]["boundary"="administrative"](area.a); – Retrieves municipalities' relations (boundaries) within Alsace.
+
+node["admin_level"="8"]["name:fr"](area.a); – Retrieves nodes for municipalities, which may represent central points with the French name (name:fr).
+
+out tags geom; – Outputs all the tags (such as the French name) and geometries for both relations and nodes.
+
+2. Importing the Data into QGIS:
+
+Install QuickOSM in QGIS if you don't have it already.
+
+Open QGIS and launch QuickOSM (found in the Processing Toolbox).
+
+Paste the Overpass API query into the Custom Overpass Query box.
+
+Click Run to fetch the data.
+
+You should now have a layer that includes:
+
+Municipality boundaries as relations (polygons).
+
+Municipality points as nodes (with name:fr label).
+
+3. Styling the Map in QGIS:
+
+Styling the Boundaries:
+
+Right-click the municipality boundaries layer (relations).
+
+Go to Properties > Symbology.
+
+Set the fill color and border color as you like (choose a subtle color for the boundaries, e.g., light gray or transparent fill).
+
+Adjust the line thickness.
+
+Styling the Nodes:
+
+Right-click the nodes layer (points).
+
+Go to Properties > Symbology.
+
+Choose Marker symbol and set a size and color (you can use a small circle or a custom marker).
+
+Adding Labels (French Names):
+
+Right-click the nodes layer > Properties > Labels.
+
+Under Label with, select the name:fr field to label the nodes with French names.
+
+You can adjust font size and placement (e.g., "over point" or "above point") for the labels.
+
+4. Export to SVG:
+
+Once you have styled your map with both municipality boundaries and labels, you can export it as an SVG file.
+
+Go to Project > Export > Export Map to SVG.
+
+Choose the resolution and other export settings.
+
+Click Save.
+
+5. Optional: Additional Tips for SVG Customization:
+
+In QGIS, you can manually adjust the SVG file to add specific style elements, such as line thickness or font style, using a text editor or vector graphic software like Inkscape.
+
+If you have a large dataset and need to optimize it for use on websites or print, you might want to simplify the SVG paths or adjust the viewBox to fit all elements nicely.
