@@ -1,0 +1,14 @@
+{
+  "presets": {
+    "address_extra": {
+      "name": "Extra Address Fields",
+      "tags": {},
+      "fields": [
+        {
+          "key": "addr:neighbourhood",
+          "label": "Neighbourhood"
+        }
+      ]
+    }
+  }
+}
